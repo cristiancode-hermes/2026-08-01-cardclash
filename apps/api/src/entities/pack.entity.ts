@@ -25,7 +25,7 @@ export class Pack {
   @Column({ type: 'simple-json' })
   dropRates: DropRates;
 
-  @Column({ length: 20, nullable: true })
+  @Column({ type: 'varchar', length: 20, nullable: true })
   guaranteedRarity: Rarity | null;
 
   @Column({ default: true })

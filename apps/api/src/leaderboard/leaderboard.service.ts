@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { User, Battle } from '../entities/entities';
 
 export interface LeaderboardRow {
@@ -23,7 +23,7 @@ export class LeaderboardService {
 
   async getTop100(): Promise<LeaderboardRow[]> {
     const users = await this.usersRepo.find({ order: { rating: 'DESC' }, take: 100 });
-    const battles = await this.battlesRepo.find({ where: { completedAt: { $not: null as unknown as never } } as never });
+    const battles = await this.battlesRepo.find({ where: { completedAt: Not(IsNull()) } });
 
     const stats = new Map<string, { wins: number; losses: number }>();
     for (const b of battles) {

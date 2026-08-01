@@ -143,7 +143,7 @@ export class AchievementsService {
 
   private async countWins(userId: string): Promise<number> {
     const rows = await this.dataSource.query(
-      `SELECT COUNT(*) as count FROM battles WHERE user_id = ? AND result = 'win'`,
+      `SELECT COUNT(*) as count FROM battles WHERE "userId" = ? AND result = 'win'`,
       [userId],
     );
     return Number(rows?.[0]?.count ?? 0);
@@ -151,7 +151,7 @@ export class AchievementsService {
 
   private async countPacks(userId: string): Promise<number> {
     const rows = await this.dataSource.query(
-      `SELECT COUNT(*) as count FROM pack_openings WHERE user_id = ?`,
+      `SELECT COUNT(*) as count FROM pack_openings WHERE "userId" = ?`,
       [userId],
     );
     return Number(rows?.[0]?.count ?? 0);
@@ -159,7 +159,7 @@ export class AchievementsService {
 
   private async countDecks(userId: string): Promise<number> {
     const rows = await this.dataSource.query(
-      `SELECT COUNT(*) as count FROM decks WHERE user_id = ?`,
+      `SELECT COUNT(*) as count FROM decks WHERE "userId" = ?`,
       [userId],
     );
     return Number(rows?.[0]?.count ?? 0);

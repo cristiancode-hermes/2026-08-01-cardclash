@@ -15,7 +15,7 @@ export class Battle {
   @Column({ length: 20 })
   difficulty: string;
 
-  @Column({ length: 10, nullable: true })
+  @Column({ type: 'varchar', length: 10, nullable: true })
   result: 'win' | 'loss' | 'draw' | null;
 
   @Column({ type: 'int', nullable: true })

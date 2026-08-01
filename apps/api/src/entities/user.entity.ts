@@ -35,7 +35,7 @@ export class User {
   @Column({ type: 'uuid', nullable: true })
   defaultDeckId: string | null;
 
-  @Column({ length: 500, nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   avatarUrl: string | null;
 
   @CreateDateColumn({ type: 'datetime' })

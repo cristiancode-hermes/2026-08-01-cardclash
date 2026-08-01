@@ -84,7 +84,7 @@ describe('PacksService', () => {
         const manager = {
           getRepository: () => ({
             createQueryBuilder: () => ({
-              setLock: () => ({ where: () => ({ getOne: async () => ({ id: 'u1', gold: 10 }) }) }),
+              where: () => ({ getOne: async () => ({ id: 'u1', gold: 10 }) }),
             }),
           }),
         };

@@ -31,11 +31,10 @@ export class PacksService {
     if (!pack) throw new NotFoundException('Pack not found');
 
     return this.dataSource.transaction(async (manager) => {
-      // Lock user row
+      // Lock user row (better-sqlite3 doesn't support pessimistic locks; transactions serialize writes)
       const user = await manager
         .getRepository(User)
         .createQueryBuilder('u')
-        .setLock('pessimistic_write')
         .where('u.id = :id', { id: userId })
         .getOne();
       if (!user) throw new NotFoundException('User not found');
