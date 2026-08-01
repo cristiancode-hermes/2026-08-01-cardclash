@@ -1,0 +1,8 @@
+QA testing complete for 2026-08-01
+Project: cardclash
+Build: ✅ API tsc exit 0 (dist/main.js), Web ng build exit 0 (dist/cardclash-web/browser)
+Tests: 49/49 passing (49 assertions, 5 suites)
+New tests: 1 updated (packs spec adapted to setLock removal); existing coverage adequate
+Issues: 4 critical fixed (union-type columns, raw SQL camelCase, IsNull operator, setLock on better-sqlite3), 2 minor
+Published: ✅ Caddy (cardclash.proyectos.cristiancode.dev), ✅ Portfolio (es.ts+en.ts+pt.ts, id 135), ✅ Landing (core), ✅ Excel (row 68), ✅ GitHub (2026-08-01-cardclash)
+Links verified: href 200, link2 (README) 200, link3 (repo) 200
