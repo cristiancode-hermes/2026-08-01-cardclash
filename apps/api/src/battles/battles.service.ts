@@ -96,17 +96,22 @@ export class BattlesService {
       } as any),
     ) as unknown as Battle;
 
-    return { battleId: battle.id, state: serialize(state) };
+    return serialize(state);
   }
 
-  async getBattle(userId: string, battleId: string): Promise<Battle> {
+  async getBattle(userId: string, battleId: string): Promise<BattleState> {
+    const battle = await this.getBattleEntity(userId, battleId);
+    return serialize(battle.state as BattleState);
+  }
+
+  private async getBattleEntity(userId: string, battleId: string): Promise<Battle> {
     const battle = await this.battlesRepo.findOne({ where: { id: battleId, userId } });
     if (!battle) throw new NotFoundException('Battle not found');
     return battle;
   }
 
   async playCard(userId: string, battleId: string, cardId: string) {
-    const battle = await this.getBattle(userId, battleId);
+    const battle = await this.getBattleEntity(userId, battleId);
     if (battle.result) throw new BadRequestException('Battle already finished');
     const state = serialize(battle.state as BattleState);
     if (state.phase !== 'player') throw new BadRequestException('Not your turn');
@@ -128,7 +133,7 @@ export class BattlesService {
   }
 
   async attackTarget(userId: string, battleId: string, attackerId: string, targetId: string) {
-    const battle = await this.getBattle(userId, battleId);
+    const battle = await this.getBattleEntity(userId, battleId);
     if (battle.result) throw new BadRequestException('Battle already finished');
     const state = serialize(battle.state as BattleState);
     if (state.phase !== 'player') throw new BadRequestException('Not your turn');
@@ -147,7 +152,7 @@ export class BattlesService {
   }
 
   async endTurn(userId: string, battleId: string) {
-    const battle = await this.getBattle(userId, battleId);
+    const battle = await this.getBattleEntity(userId, battleId);
     if (battle.result) throw new BadRequestException('Battle already finished');
     let state = serialize(battle.state as BattleState);
     if (state.phase !== 'player') throw new BadRequestException('Not your turn');

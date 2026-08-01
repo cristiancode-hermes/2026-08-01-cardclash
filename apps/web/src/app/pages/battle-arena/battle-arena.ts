@@ -18,7 +18,7 @@ import type { BattleState, Card, Minion } from '../../models/models';
       @if (state(); as s) {
         <!-- Enemy zone -->
         <div class="zone enemy-zone">
-          <div class="zone-head">
+          <div class="zone-head enemy-hero" [class.targetable]="selectedMinion() !== null" (click)="attackHero()">
             <span class="hero-name">Enemy</span>
             <div class="hero-hp" [class.low]="s.enemy.heroHp <= 10">{{ s.enemy.heroHp }}</div>
             <div class="mana-row">
@@ -159,6 +159,8 @@ import type { BattleState, Card, Minion } from '../../models/models';
     }
     .player-head { margin-top: var(--space-sm); }
     .hero-name { font-weight: 700; }
+    .enemy-hero { cursor: default; border-radius: var(--radius-md); padding: 4px 12px; transition: background var(--duration-fast) var(--ease-out); }
+    .enemy-hero.targetable { cursor: crosshair; background: rgba(239, 68, 68, 0.08); }
     .hero-hp {
       font-family: var(--font-mono);
       font-weight: 700;
